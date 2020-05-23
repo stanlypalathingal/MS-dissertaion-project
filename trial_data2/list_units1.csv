@@ -1,6 +1,6 @@
 ugm -3,0
 Celsius,1
-ppb,2
+db,2
 %,3
-hpa,4
-db,5
+ppb,4
+hpa,5
