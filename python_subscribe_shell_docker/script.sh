@@ -1,0 +1,1 @@
+python subscribe.py & python decider_proper.py
