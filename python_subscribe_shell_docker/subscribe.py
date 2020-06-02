@@ -3,11 +3,11 @@ import paho.mqtt.client as mqtt
 import time
 import socket
 s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-s.bind((socket.gethostname(),1105))
+s.bind((socket.gethostname(),9002))
 s.listen()
 mqtt_host = "mqtt.eclipse.org"
 
-print("Beginning of fle")
+# print("Beginning of fle")
 def on_connect_mosquitto(client, userdata, flags, rc):
     print("Result from Mosquitto connect: {}".format(
         mqtt.connack_string(rc)))
@@ -25,11 +25,11 @@ def print_received_message_mosquitto(msg):
 def on_level_message_mosquitto(client, userdata, msg):
     print_received_message_mosquitto(msg)
     mess=msg.payload.decode("utf-8")
-    with open('/home/pi/Documents/test.csv','a+') as f:
+    with open('/home/stanlysac/Documents/test.csv','a+') as f:
         if(mess=="done"):
             clientsocket,address = s.accept()
             clientsocket.send(bytes("done","utf-8"))
-            print("Key sent")
+            print("completed")
             mess=""
             mosquitto_client.connect(host=mqtt_host, port=1883)
         f.write("\n"+str(mess))
@@ -39,10 +39,10 @@ if __name__ == "__main__":
     mosquitto_client = mqtt.Client(protocol=mqtt.MQTTv311)  # Defining the client
     mosquitto_client.on_connect = on_connect_mosquitto
     mosquitto_client.on_subscribe = on_subscribe_mosquitto
-    print("on message received")
+    # print("on message received")
     mosquitto_client.on_message=on_level_message_mosquitto
-    print("before connect")
+    # print("before connect")
     mosquitto_client.connect(host=mqtt_host, port=1883)
-    print("after connect")
+    # print("after connect")
     mosquitto_client.loop_forever()
 
