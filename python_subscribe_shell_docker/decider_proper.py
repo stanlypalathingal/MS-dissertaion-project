@@ -36,9 +36,9 @@ original_combination=a.drop("1",1)
 
 #function to factor the columns of sensor,types and units
 # Function1 
-def factorize(obj,obj_list,table,data,flag):
+def factorize(obj,obj_list,table,data,write_to_file):
 	#print(data[obj].unique()) 
-	if(flag):
+	if(write_to_file):
 		data_s=pd.DataFrame(data[obj].unique())
 		new_sensor = data_s[~data_s[0].isin(obj_list.id)]
 		ns=[]
