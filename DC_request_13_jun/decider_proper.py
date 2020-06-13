@@ -2,9 +2,9 @@ import time
 start=time.time()
 
 # Load the publish and subscribe files
-from publish import publishResult
-from subscribe_key import subscribeKey
+from publish import publish
 from client import subscribeStatus
+from sym_key_generator import sym_key
 #from publish_request import requestNewData
 
 #Load the packages
@@ -126,15 +126,12 @@ It will compare with the old key stored earlier and
 	if they are different it will enter into the if loop  
 '''
 while(True):
-	subscribeKey() # call to subscrive_key.py
-	new_key=open('data/key.txt').readlines()
-	new_key = ''.join(new_key)
 	mess=subscribeStatus()
 	if(mess=="done"):
 		start=time.time()
 		print("starting the analysis")
 		#load the data for testing and remove the dulicates
-		temp_data=pd.read_csv("/home/pi/Documents/test.csv",delimiter=",", 
+		temp_data=pd.read_csv("/home/stanlysac/Documents/test.csv",delimiter=",", 
 			names=["Sensor","Type","Units","time","Flag","Value"])
 		temp_data=temp_data.drop_duplicates()
 		print("Number of rows for testing",temp_data.shape[0])
@@ -155,23 +152,17 @@ while(True):
 			test_acc=100-(flagged_true/flagged_false)
 			print("amount of true readings are ",test_acc)
 			if(test_acc>99.99):
-				# the function below publishes the decision back through publish
-				publishResult("proceed")
-				#f = open("/home/pi/Documents/test.csv", "w")
-				#f.truncate()
-				#f.close()
+				sym_key()
 			else:
 				# the function below publishes the decision back through publish
-				publishResult("abort")
+				publish("result","abort")
 
 		else:
 			# the function below publishes the decision back through publish
-			publishResult("abort")
+			publish("result","abort")
 			print("contain spoof datas and they are \n")
 			print(spoof_detect(original_combination,temp_data))
 
-		#assigning newkey with old key and set message as empty
-		old_key=new_key
 		mess=None
 
 		end=time.time()

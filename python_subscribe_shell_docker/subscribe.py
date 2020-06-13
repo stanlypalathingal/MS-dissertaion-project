@@ -3,33 +3,33 @@ import paho.mqtt.client as mqtt
 import time
 import socket
 s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-s.bind((socket.gethostname(),9002))
+s.bind((socket.gethostname(),9003))
 s.listen()
 mqtt_host = "mqtt.eclipse.org"
 
-# print("Beginning of fle")
 def on_connect_mosquitto(client, userdata, flags, rc):
-    print("Result from Mosquitto connect: {}".format(
-        mqtt.connack_string(rc)))
+    #print("Result from Mosquitto connect: {}".format(mqtt.connack_string(rc)))
+    pass
     # Check whether the result form connect is the CONNACK_ACCEPTED  connack code
     if rc == mqtt.CONNACK_ACCEPTED:
         # Subscribe to a topic 
         sensors_topic_filter = "usbdata"
-        print("before subscribe")         
+        # print("before subscribe")         
         client.subscribe(sensors_topic_filter)
 def on_subscribe_mosquitto(client, userdata, mid, granted_qos):
-    print("I've subscribed and file open")
+    #print("I've subscribed")
+    pass
 def print_received_message_mosquitto(msg):
     print("Message received. Payload: {}".format(str(msg.payload)))
 
 def on_level_message_mosquitto(client, userdata, msg):
-    print_received_message_mosquitto(msg)
+    #print_received_message_mosquitto(msg)
     mess=msg.payload.decode("utf-8")
-    with open('/home/stanlysac/Documents/test.csv','a+') as f:
+    with open('/home/pi/Documents/test.csv','a+') as f:
         if(mess=="done"):
             clientsocket,address = s.accept()
             clientsocket.send(bytes("done","utf-8"))
-            print("completed")
+            print("All data written to file")
             mess=""
             mosquitto_client.connect(host=mqtt_host, port=1883)
         f.write("\n"+str(mess))
