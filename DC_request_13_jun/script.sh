@@ -1,1 +1,1 @@
-python subscribe.py & DC_request.py & python decider_proper.py
+python subscribe.py & python3 DC_request.py & python decider_proper.py

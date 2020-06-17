@@ -17,20 +17,20 @@ def on_subscribe_mqtt(client, userdata, mid, granted_qos):
 
 def verify_request():
     # print("in verify")
-    df1=pd.read_csv("data/register_dc.csv",delimiter=",",names=["public","time"])
+    df1=pd.read_csv("data/register_dc.csv",delimiter=",",names=["topic","time"])
     df1["time"]=pd.to_datetime(df1["time"],infer_datetime_format=True)
-    df2=pd.read_csv("data/data_request.csv",delimiter=",",names=["public","time"])
+    df2=pd.read_csv("data/data_request.csv",delimiter=",",names=["topic","time"])
     df2["time"]=pd.to_datetime(df2["time"],infer_datetime_format=True)
     l=len(df1)
     for i in range(0,l):
-        if(df1["public"][i]==df2.public[0]):
+        if(df1["topic"][i]==df2.topic[0]):
             if(df1.time[i] < df2.time[0]):
-                publish("sensor_data_request","usbdata") # requesting data from sensor
+                publish("sensor_data_req","usbdata") # requesting data from sensor
                 df1.time[i]=df2.time[0] # updating the time to the request time
                 df1.to_csv("data/register_dc.csv",index=False,header=False)
-                # with open('data/pub_Key_store.csv','w') as f:
-                #     f.write("\n"+str(df2.public[0]))
-                # f.close()
+                with open('data/temporary_store.csv','w') as f:
+                    f.write(str(df2.topic[0]))
+                f.close()
             df2=df2.drop(df2.index[[0]])
             df2.to_csv("data/data_request.csv",index=False,header=False)
         else:
@@ -42,7 +42,7 @@ def on_message_mqtt(client, userdata, msg):
         f.write("\n"+str(mess))
     f.close()
     verify_request()
-    
+
 if __name__ == "__main__":
     mosquitto_client = mqtt.Client(protocol=mqtt.MQTTv311)  # Defining the client
     mosquitto_client.on_connect = on_connect_mqtt
