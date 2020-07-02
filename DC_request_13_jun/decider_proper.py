@@ -21,14 +21,9 @@ start=time.time()
 list_sensor=pd.read_csv("data/list_sensor1.csv", delimiter=",",names=["id","factor"])
 list_units=pd.read_csv("data/list_units1.csv", delimiter=",",names=["id","factor"]) 
 list_type=pd.read_csv("data/list_types1.csv", delimiter=",",names=["id","factor"]) 
-old_key=open('data/key.txt').readlines()
-old_key = ''.join(old_key)
 
 #load the training dataset
 df=pd.read_csv("data/Sample dataset values1.csv")
-total_row=df.shape[0]
-trial_row=int(total_row-(total_row*0.25))
-print("total rows ",total_row)
 
 # the original combination of sensor, type and units
 a=df.groupby(["Sensor","Type","Units"])["Sensor"].unique().to_frame(name="1").reset_index()
@@ -100,6 +95,10 @@ assign the x and y where
 '''
 x= ['Sensor', 'Type', 'Units','Value']
 y=['Flag']
+
+total_row=df.shape[0]
+trial_row=int(total_row-(total_row*0.25))
+print("total rows ",total_row)
 
 #split the train and test datasets
 train=df.loc[1:trial_row,]
