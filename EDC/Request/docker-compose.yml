@@ -1,0 +1,43 @@
+version : "3"
+
+networks:
+  static-network:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+services:
+  mongo:
+    container_name: mongodb
+    image: mongo
+    restart: always
+    networks:
+      static-network:
+        ipv4_address: 172.20.128.2
+
+  mongo-express:
+     container_name: mongoexpress
+     image: mongo-express
+     restart: always
+     ports:
+       - 8081:8081
+
+  publish:
+    container_name: pythonpublisher
+    command: mqtt.eclipse.org
+    image: ashokjjk/edgedc:py
+
+  decrypt:
+    container_name: javadecryption
+    command: mqtt.eclipse.org --spring.data.mongodb.host=172.20.128.2
+    image: ashokjjk/edgedc:jv
+
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - 8085:8080
+    stop_grace_period: 1m30s
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      placement:
+        constraints: [node.role == manager]
