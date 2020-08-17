@@ -1,9 +1,11 @@
 # Introduction
 This repository contains the files of the research project titled 
 
-**ACCESS CONTROL IN IOT GATEWAY USING SOFTWARE-DEFINED PERIMETER CONTROLLER AND DECISION TREE**. 
+**DECISION TREE EMPOWERED DATA CLASSIFICATION IN EDGE AND CLOUD DATACENTRE**. 
 
 The scripts used in the three components (SC, IoTD and EDC) are available in the folders with the respective names. The folder named ‘Graph’ contains the graphs and plots used in the document.
+
+<img src="C:/Users/HP/OneDrive - Newcastle University/Dissertation/Diagrams/architecture.png" height="182" width="550" style="vertical-align:middle">
 
 The folders named after the components contain the **Dockerfile** used to create the docker image. The docker images available here for the **armv32** architecture (Raspberry Pi) and may not run in ordinary systems. 
 # Reproducibility 
