@@ -1,0 +1,3 @@
+http://uoweb3.ncl.ac.uk/api/v1.1/sensors/PER_AIRMON_MESH1911150/data/json/?
+http://uoweb3.ncl.ac.uk/api/v1.1/sensors/PER_AIRMON_MESH301245/data/json/?
+http://uoweb3.ncl.ac.uk/api/v1.1/sensors/PER_EMOTE_1309/data/json/?
