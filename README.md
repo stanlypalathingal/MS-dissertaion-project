@@ -11,7 +11,7 @@ The folders named after the components contain the **Dockerfile** used to create
 # Reproducibility 
 In order to reproduce the system, the required system and software requirements are
 * Three SSH enable Raspberry Pi with Docker installed. 
-* A static IP
+* A static IP (Broker)
 
 The three components must run parallelly to reproduce the model. Docker images for the components are uploaded in the **www.dockerhub.com** and one must pull it to the system to execute it.
 For the details of execution see the video named **Execution_Details.mp4** in the root directory
