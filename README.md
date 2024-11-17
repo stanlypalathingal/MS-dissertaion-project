@@ -1,3 +1,9 @@
+The findings of this work are published in "Decision tree based user-centric security solution for critical IoT infrastructure"
+
+The work simulates a reallife scenario and uses Machine learning methods to identify threats.
+
+It was part of MS Data Science Dissertation.
+
 # Introduction
 This repository contains the files of the research project titled 
 
